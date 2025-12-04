@@ -1,0 +1,16 @@
+# Pastas de saída de build (binários)
+[Bb]in/
+[Oo]bj/
+# Arquivos de usuário do Visual Studio
+*.suo
+*.user
+*.useros
+# Arquivo de cache de extensão do VS (o que inclui .vsixd)
+*.vsix
+*.vsixd
+# Pasta de usuário do Visual Studio (importante!)
+.vs/
+# Pacotes NuGet
+packages/
+# Logs
+*.log
