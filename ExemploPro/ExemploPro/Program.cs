@@ -2,7 +2,6 @@
 
 class Program
 {
-    // Procedimento que “verifica” um setor e retorna se está ok (true) ou não (false)
     static bool Verificar_Equipamento(string setor)
     {
         Console.WriteLine($"Verificação dos equipamentos do setor {setor}...");
