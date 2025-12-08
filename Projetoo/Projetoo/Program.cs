@@ -19,18 +19,24 @@ public static class ConfiguracaoGlobal
 
 public class SegurancaTotal
 {
-    // ----------------------------------------------------------------------
-    // PROCEDIMENTO PRINCIPAL: Orquestra o Fluxo de Trabalho (Main Routine)
-    // ----------------------------------------------------------------------
+    // ------------------------------------------------------
+    // PROCEDIMENTO PRINCIPAL: Orquestra o Fluxo de Trabalho 
+    // ------------------------------------------------------
     public static void Main(string[] args)
     {
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("=================================================");
         Console.WriteLine("PROGRAMA PROCEDURAL");
-        Console.WriteLine("=================================================\n");
+        Console.Write("=================================================\n\nClique em qualquer tecla para continuar...");
         Console.ResetColor();
+        Console.ReadKey();
+        Console.Clear();
         Console.Write("Insira a quantidade de setores: ");
         int qntSetor = Convert.ToInt32(Console.ReadLine());
+        if (qntSetor == 0) {
+            Console.WriteLine("A quantidade de setores não pode ser zero!");
+            return; 
+        }
         Console.Write("Insira a quantidade de extintores por setor: ");
         int extSetor = Convert.ToInt32(Console.ReadLine());
         Console.Write("Insira a quantidade de sensores por setor: ");
@@ -41,7 +47,7 @@ public class SegurancaTotal
         ConfiguracaoGlobal.EXTTINTORES_POR_SETOR = extSetor;
         ConfiguracaoGlobal.SENSORES_POR_SETOR = senSetor;
 
-        Console.WriteLine($"Iniciando inspeção em {ConfiguracaoGlobal.NUM_SETORES} setores...");
+        Console.Write($"Iniciando inspeção em {ConfiguracaoGlobal.NUM_SETORES} {(ConfiguracaoGlobal.NUM_SETORES == 1 ? "setor" : "setores")}...");
         Console.ReadKey();
 
         // 1. O FLUXO DE CONTROLE (Loops) é o coração da automação procedural.
@@ -64,7 +70,7 @@ public class SegurancaTotal
                 // Chama o PROCEDIMENTO de relatório, que é REUTILIZADO 10 vezes por setor
                 GerarRelatorioExtintor(setorNome, j, statusOk);
             }
-            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("-----------------------------------\n");
             // 1.2. Inspeção de Sensores
             for (int k = 1; k <= ConfiguracaoGlobal.SENSORES_POR_SETOR; k++)
             {
@@ -103,7 +109,7 @@ public class SegurancaTotal
     {
         // Simulação de dados de inspeção
         string data = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-        string status = statusOk ? "APROVADO" : "REPROVADO";
+        string status = statusOk ? "VERFICADO" : "NÃO VERIFICADO";
         // Cria a linha do relatório e ADICIONA ao estado global
         string linha = $"{data} | {setor} | Sensor Fumaça #{numero:D2} | Status: {status}";
         ConfiguracaoGlobal.RelatorioFinal.Add(linha);
@@ -123,7 +129,7 @@ public class SegurancaTotal
 
         // Exibe apenas as falhas
         var falhas = ConfiguracaoGlobal.RelatorioFinal
-            .Where(r => r.Contains("REPROVADO"))
+            .Where(r => r.Contains("NÃO VERIFICADO"))
             .ToList();
 
         if (falhas.Any())
@@ -139,7 +145,7 @@ public class SegurancaTotal
         else
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"\nTODOS OS {ConfiguracaoGlobal.NUM_SETORES} EQUIPAMENTOS ESTÃO EM CONFORMIDADE (OK).");
+            Console.WriteLine($"\nTODOS OS EQUIPAMENTOS ESTÃO EM CONFORMIDADE (OK).");
             Console.ResetColor();
         }
 
